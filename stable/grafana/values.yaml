@@ -231,6 +231,11 @@ server:
       ##
       type: prometheus
 
+      ## Label used in Grafana dashboard specs
+      ## Default: DS_PROMETHEUS
+      ##
+      label: DS_PROMETHEUS
+
       ## The url of the datasource. To set correctly you need to know
       ## the right datasource name and its port ahead. Check kubernetes
       ## dashboard or describe the service should fulfill the requirements.

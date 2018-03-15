@@ -1,4 +1,6 @@
 {{- if .Values.dashboardImports.enabled -}}
+{{ $label := .Values.server.setDatasource.datasource.label }}
+{{ $dsource := .Values.server.setDatasource.datasource.name }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,7 +16,7 @@ data:
     set -e
     cd /var/lib/grafana/import
     {{- range $name, $val := .Values.dashboardImports.dashboards }}
-      wget -O {{ $name }} {{ $val }}
+      wget -O- -q {{ $val }} | sed -e '{{ printf "s|${%s}|%s|g" $label $dsource }}' > {{ $name }}
     {{- end }}
     for dashboard in $(ls); do
       wget \
